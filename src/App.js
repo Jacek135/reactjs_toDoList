@@ -1,4 +1,26 @@
 import React, {Component} from 'react';
+import './App.css'
+
+class ToDoItem extends Component {
+  static defaultProps = {
+    done: false
+  }
+      state = {
+      done: this.props.done
+    }
+
+    toggleDone = () => {
+      this.setState({done: !this.state.done})
+    }
+
+    render() {
+      const { text } = this.props
+
+      return (<div onClick={this.toggleDone} className={this.state.done ? 'doneTodo': ''}>
+          <p>{text}</p>
+        </div>)
+    }   
+  }
 
 class ToDoList extends Component {
   state = {
@@ -23,7 +45,7 @@ class ToDoList extends Component {
     return (
       <div>
         <h1>{title}</h1>
-        {tasks.map(task => <dvi><p>{task}</p></dvi>)}
+        {tasks.map(task => <ToDoItem text={task.text} done={task.done}/>)}
         <input type='text' onChange={this.updateDraft} value={draft}/>
         <button onClick={this.addToDo}>Add</button>
       </div>
@@ -34,8 +56,8 @@ class ToDoList extends Component {
 
 class App extends Component {
   myTasks = [
-    'Reacord a ReactJS video',
-    'Go for a walk'
+    {done: true, text: 'Reacord a ReactJS video'},
+    {done: false, text: 'Go for a walk'}
   ]
   render() {
     return (
